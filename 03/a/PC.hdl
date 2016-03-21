@@ -17,4 +17,12 @@ CHIP PC {
 
     PARTS:
     // Put your code here:
+    ALU(x=v, y=false, zx=false, nx=true, zy=true, ny=true, f=true, no=true, out=incx);
+    Mux16(a=v, b=incx, sel=inc, out=v1);
+    Mux16(a=v1, b=in, sel=load, out=v2);
+    Mux16(a=v2, b=false, sel=reset, out=v3);
+    Or(a=reset, b=load, out=lc1);
+    Or(a=lc1, b=inc, out=lc);
+    Register(in=v3, load=lc, out=v);
+    And16(a=v, b=true, out=out);
 }
